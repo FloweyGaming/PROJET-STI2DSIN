@@ -13,6 +13,7 @@ https://www.gotronic.fr/art-module-gps-ada746-20694.htm
 
 
 # LISTE SITES
-https://www.gotronic.fr/
-https://www.lextronic.fr/
-https://www.duinoedu.com/
+[GoTronic](https://www.gotronic.fr/)
+[LexTronic](https://www.lextronic.fr/)
+[DuinoEdu](https://www.duinoedu.com/)
+[RobotShop](https://eu.robotshop.com/fr)
