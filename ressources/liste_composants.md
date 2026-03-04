@@ -6,6 +6,7 @@ https://www.gotronic.fr/art-motoreducteur-mfa-986d1001-12418.htm
 
 # CAPTEURS POTENTIELS
 https://www.gotronic.fr/art-microrupteur-sps75gc-4324.htm
+https://eu.robotshop.com/fr/products/hc-sr04-ultrasonic-range-finder-tys?qd=6ef191a4690e01ba381ab824d29739f8
 
 ## GPS
 https://www.gotronic.fr/art-module-gps-tel0094-25732.htm
