@@ -5,8 +5,7 @@ float VCC = 5.0;
 float VOUT;
 float RC;
 
-Ultrasonic ultrasonic1(12, 13);
-
+Ultrasonic ultrasonic1(12, 13); //CapUS = PIN 12 & 13
 #define Led 5 //LED = PIN 5
 #define buzzer 6 //BUZZER = PIN 6
 
