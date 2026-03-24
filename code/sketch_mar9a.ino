@@ -11,7 +11,7 @@ int pression;
 float VCC = 5.0;
 float VOUT;
 float RC;
-auto timer = timer_create_default();
+auto timer = timer_create_default(); //Démmarage de la fonction Timer
 
 /*************************
 ----DÉFINITIONS DE PIN----
@@ -38,13 +38,13 @@ void setup() {
 ******************************/
 int tooclose(){
   int distance = ultrasonic1.distanceRead(); // Var "Distance" = Distance Renvoyée par CapUS
-  if (distance < 20 || distance > 300) {
+  if (distance < 20 || distance > 300) { // Si un objet est à moins de 20 cm ET 2 secondes sont passées, on allume le Buzzer
     analogWrite(A0, 255);
-    digitalWrite(buzzer, HIGH); // Si un objet est à moins de 20 cm ET 2 secondes sont passées, on allume le Buzzer
+    digitalWrite(buzzer, HIGH); 
     delay(500);
     digitalWrite(buzzer, LOW);
     delay(500);
-    }
+    } 
 }
 
 /************************
@@ -53,6 +53,7 @@ int tooclose(){
 void loop() {
 	int distance = ultrasonic1.distanceRead(); // Var "Distance" = Distance Renvoyée par CapUS
   pression = analogRead(A2); // Var "Pression" = Force Renvoyée par CapPR
+  timer.tick();
 
   /***************************
   ----ÉCRITURE DES VALEURS----
@@ -69,7 +70,7 @@ void loop() {
   ----DÉTÉCTION DE DISTANCE----
   ****************************/
   if (distance < 20 || distance > 300) {
-    timer.in(2500, tooclose);
+    timer.in(2500, tooclose); // Si un objet est à moins de 20 cm ET 2 secondes sont passées, on allume le Buzzer
   } 
   else {
     digitalWrite(buzzer, LOW); //Sinon, éteindre (ou laisser éteint) le Buzzer
