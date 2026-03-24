@@ -69,7 +69,7 @@ void loop() {
   ----DÉTÉCTION DE DISTANCE----
   ****************************/
   if (distance < 20 || distance > 300) {
-    timer.in(2500, tooclose());
+    timer.in(2500, tooclose);
   } 
   else {
     digitalWrite(buzzer, LOW); //Sinon, éteindre (ou laisser éteint) le Buzzer
