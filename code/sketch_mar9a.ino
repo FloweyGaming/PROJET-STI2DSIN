@@ -38,7 +38,7 @@ void setup() {
 ******************************/
 int tooclose(){
   int distance = ultrasonic1.distanceRead(); // Var "Distance" = Distance Renvoyée par CapUS
-  if (distance < 20 || distance > 300) { // Si un objet est à moins de 20 cm ET 2 secondes sont passées, on allume le Buzzer
+  if (distance < 20 || distance > 300) { // Si l'objet est toujours à moins de 20 cm, on allume le Buzzer
     analogWrite(A0, 255);
     digitalWrite(buzzer, HIGH); 
     delay(500);
@@ -70,7 +70,7 @@ void loop() {
   ----DÉTÉCTION DE DISTANCE----
   ****************************/
   if (distance < 20 || distance > 300) {
-    timer.in(2500, tooclose); // Si un objet est à moins de 20 cm ET 2 secondes sont passées, on allume le Buzzer
+    timer.in(2500, tooclose); // Si un objet est à moins de 20 cm, lancer un chrono de 2.5 secondes, puis lancer la fonction "tooclose"
   } 
   else {
     digitalWrite(buzzer, LOW); //Sinon, éteindre (ou laisser éteint) le Buzzer
