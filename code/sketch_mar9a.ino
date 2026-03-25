@@ -36,7 +36,7 @@ void setup() {
 /******************************
 ----SI DISTANCE TROP COURTE----
 ******************************/
-int tooclose(){
+int tooclose() {
   int distance = ultrasonic1.distanceRead(); // Var "Distance" = Distance Renvoyée par CapUS
   if (distance < 20 || distance > 300) { // Si l'objet est toujours à moins de 20 cm, on allume le Buzzer
     analogWrite(A0, 255);
