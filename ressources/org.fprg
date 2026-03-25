@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="2.11">
+    <attributes>
+        <attribute name="name" value=""/>
+        <attribute name="authors" value="mdumont2"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2026-03-04 05:33:47 "/>
+        <attribute name="created" value="bWR1bW9udDI7NTYwMDI2Wi1TMDA3WDA1OzIwMjYtMDMtMDQ7IjAxOjU5OjQ0ICI7Mjg4Mg=="/>
+        <attribute name="edited" value="bWR1bW9udDI7NTYwMDI2Wi1TMDA3WDA1OzIwMjYtMDMtMDQ7IjA1OjMzOjQ3ICI7MjsyOTkw"/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="Activer GPS" type="Integer" array="False" size=""/>
+            <declare name="Activer CapteurPression" type="String" array="False" size=""/>
+            <if expression="Pression &gt; 100N">
+                <then>
+                    <declare name="Verrouiller Poubelle" type="String" array="False" size=""/>
+                    <declare name="Activer Presse" type="String" array="False" size=""/>
+                    <declare name="Allumer LED" type="String" array="False" size=""/>
+                    <declare name="Retirer Presse" type="String" array="False" size=""/>
+                    <declare name="Envoyer Localisation" type="String" array="False" size=""/>
+                </then>
+                <else>
+                    <declare name="&#201;teindre LED" type="String" array="False" size=""/>
+                </else>
+            </if>
+            <comment text="R&#233;p&#233;ter Ind&#233;finiment"/>
+        </body>
+    </function>
+</flowgorithm>

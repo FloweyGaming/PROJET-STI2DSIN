@@ -1,0 +1,74 @@
+#include <Ultrasonic.h>
+
+/***********************
+----SETUP COMPOSANTS----
+***********************/
+int press;
+float VCC = 5.0;
+float VOUT;
+float RC;
+int pression;
+
+/*************************
+----DÉFINITIONS DE PIN----
+*************************/
+Ultrasonic ultrasonic1(12, 13);
+#define buzzer 5
+#define fin 7
+#define press A0
+
+void setup() {
+  /*************************
+----DÉFINITIONS DE PIN----
+*************************/
+  pinMode(press, INPUT);
+  pinMode(fin, INPUT);
+  pinMode(buzzer, OUTPUT);
+  pinMode(press, INPUT);
+
+  Serial.begin(9600);
+  digitalWrite(buzzer, LOW);
+}
+
+void loop() {
+
+  int distance = ultrasonic1.distanceRead();
+
+  Serial.print("Distance: ");
+  Serial.print(distance);
+  Serial.println(" cm");
+
+  pression = analogRead(A2); // Var "Pression" = Force Renvoyée par CapPR
+  Serial.print("Poids: ");
+
+  long int poids = pression*19.55;
+  Serial.print(poids);
+  Serial.println(" g"); //Renvoie "<pression> g"
+
+  if (distance < 20 || distance > 320) { // si la distance est > à 320 ça veut dire que c'est collé au capteur
+    //delay(3500);
+    ultrasonic1.distanceRead();
+    while (distance < 20 || distance > 320) {
+      delay(10);
+      digitalWrite(buzzer, HIGH);
+      delay(500);
+      digitalWrite(buzzer, LOW);
+      delay(500);
+      distance = ultrasonic1.distanceRead(); 
+        Serial.print("Distance: ");
+        Serial.print(distance);
+        Serial.println(" cm     WARNING");
+    }
+  }
+  while (distance < 20 || distance > 320 || digitalRead(fin) == HIGH || poids >= 10000){
+    Serial.println("rrr");
+pression = analogRead(A2); // Var "Pression" = Force Renvoyée par CapPR
+  Serial.print("Poids: ");
+
+  long int poids = pression*19.55;
+  Serial.print(poids);
+  Serial.println(" g"); //Renvoie "<pression> g"
+    delay(400);
+  }
+  delay(100);
+  }
