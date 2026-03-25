@@ -42,12 +42,12 @@ void setup() {
 int tooclose(){
   int distance = ultrasonic1.distanceRead(); // Var "Distance" = Distance Renvoyée par CapUS
   if (distance < 20 || distance > 300) { // Si l'objet est toujours à moins de 20 cm, on allume le Buzzer
+    Serial.println("WARNING");
     analogWrite(A0, 255);
     digitalWrite(buzzer, HIGH); 
     delay(500);
     digitalWrite(buzzer, LOW);
     delay(500);
-    Serial.println("WARNING");
     } 
 }
 
@@ -83,9 +83,9 @@ void loop() {
     analogWrite(A0, 150);
   }
 
-  if (digitalRead(fin) == HIGH) {
+  /*if (digitalRead(fin) == HIGH) {
     Serial.println("FDC"); //Renvoie "FDC"
-  }
+  } */
 
   /*****************************
   ----DÉTÉCTION DE PRESSSION----
