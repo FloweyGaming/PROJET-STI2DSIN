@@ -76,7 +76,7 @@ void loop() {
   ----DÉTÉCTION DE DISTANCE----
   ****************************/
   if (distance < 20 || distance > 300) {
-    timer.in(3500, tooclose); // Si un objet est à moins de 20 cm, lancer un chrono de 3.5 secondes, puis lancer la fonction "tooclose"
+    timer.in(2500, tooclose); // Si un objet est à moins de 20 cm, lancer un chrono de 2.5 secondes, puis lancer la fonction "tooclose" (LIGNE 42)
   } 
   else {
     digitalWrite(buzzer, LOW); //Sinon, éteindre (ou laisser éteint) le Buzzer
