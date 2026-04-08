@@ -42,12 +42,28 @@ void setup() {
 int tooclose(){
   int distance = ultrasonic1.distanceRead(); // Var "Distance" = Distance Renvoyée par CapUS
   if (distance < 20 || distance > 300) { // Si l'objet est toujours à moins de 20 cm, on allume le Buzzer
-    Serial.println("WARNING");
-    analogWrite(A0, 255);
-    digitalWrite(buzzer, HIGH); 
-    delay(500);
-    digitalWrite(buzzer, LOW);
-    delay(500);
+    while (distance < 20 || distance > 300){
+      Serial.println("WARNING");
+      distance = ultrasonic1.distanceRead();
+      Serial.print(distance);
+    }
+    while (pression < 150) { // rajouter le fin de course
+      distance = ultrasonic1.distanceRead();
+      while (distance <= 20 || distance >= 300){
+        Serial.print(distance);
+        Serial.println("WARNING");
+        digitalWrite(buzzer, HIGH); 
+        delay(500);
+        digitalWrite(buzzer, LOW);
+        delay(500);
+        distance = ultrasonic1.distanceRead();
+      }
+
+      Serial.println("pont en h");
+      pression = analogRead(A2);
+      // pont en h
+    }
+    // faire un if au cas où fin de course ou pression trop forte pour que le verrin remonte
     } 
 }
 
