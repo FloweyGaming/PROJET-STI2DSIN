@@ -99,9 +99,11 @@ void loop() {
     analogWrite(A0, 150);
   }
 
-  /*if (digitalRead(fin) == HIGH) {
+  /*
+  if (digitalRead(fin) == HIGH) {
     Serial.println("FDC"); //Renvoie "FDC"
-  } */
+  } 
+  */
 
   /*****************************
   ----DÉTÉCTION DE PRESSSION----
