@@ -34,6 +34,8 @@ void setup() {
   pinMode(led, OUTPUT); //LED = SORTIE
   pinMode(buzzer, OUTPUT); //BUZZER = SORTIE
   digitalWrite(buzzer, LOW); //BUZZER ÉTEINT
+  digitalWrite(motorA, LOW); //MOTEUR ARRÊTÉ
+  digitalWrite(motorB, LOW); //IDEM ↑
   pinMode(fin, INPUT); //CAPTEUR FIN DE COURSE = ENTRÉE
   Serial.begin(9600);
 }
@@ -43,7 +45,7 @@ void setup() {
 ******************************/
 int tooclose(){
   int distance = ultrasonic1.distanceRead(); // Var "Distance" = Distance Renvoyée par CapUS
-  if (distance < 20 || distance > 300) { // Si l'objet est toujours à moins de 20 cm, on allume le Buzzer
+  if (distance < 20 || distance > 300) { // Si l'objet est toujours à moins de 20 cm, on allume le Buzzer et on arrête le Moteur
     while (distance < 20 || distance > 300){
       digitalWrite(motorA, LOW);
       digitalWrite(motorB, LOW);
