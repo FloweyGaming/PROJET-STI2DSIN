@@ -20,14 +20,16 @@ Ultrasonic ultrasonic1(12, 13); //CapUS = PIN 12 (TRIG) & 13 (ECHO)
 #define led 5 //LED = PIN 5
 #define buzzer 6 //BUZZER = PIN 6
 #define fin 7 //CAPTEUR FIN DE COURSE = PIN 7
+#define motorA 2 //MOTEUR = PIN 2
+#define motorB 3 //MOTEUR = PIN 3
 int press = A2; //CAPTEUR PRESSION = PIN A2
-int motor = A0; //MOTEUR = PIN A0
 
 /**********************
 ----BOUCLE INITIALE----
 **********************/
 void setup() {
-  pinMode(motor, OUTPUT); //MOTEUR = SORTIE
+  pinMode(motorA, OUTPUT); //MOTEURA = SORTIE1
+  pinMode(motorB, OUTPUT); //MOTEURB = SORTIE2
   pinMode(press, INPUT); //CAPTEUR PRESSION = ENTRÉE
   pinMode(led, OUTPUT); //LED = SORTIE
   pinMode(buzzer, OUTPUT); //BUZZER = SORTIE
@@ -43,6 +45,8 @@ int tooclose(){
   int distance = ultrasonic1.distanceRead(); // Var "Distance" = Distance Renvoyée par CapUS
   if (distance < 20 || distance > 300) { // Si l'objet est toujours à moins de 20 cm, on allume le Buzzer
     while (distance < 20 || distance > 300){
+      digitalWrite(motorA, LOW);
+      digitalWrite(motorB, LOW);
       Serial.println("WARNING");
       distance = ultrasonic1.distanceRead();
       Serial.print(distance);
@@ -51,6 +55,7 @@ int tooclose(){
       distance = ultrasonic1.distanceRead();
       while (distance <= 20 || distance >= 300){
         Serial.print(distance);
+        digitalWrite(motorB, HIGH);
         Serial.println("WARNING");
         digitalWrite(buzzer, HIGH); 
         delay(500);
@@ -61,7 +66,6 @@ int tooclose(){
 
       Serial.println("pont en h");
       pression = analogRead(A2);
-      // pont en h
     }
     // faire un if au cas où fin de course ou pression trop forte pour que le verrin remonte
     } 
