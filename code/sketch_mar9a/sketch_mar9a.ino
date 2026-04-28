@@ -79,7 +79,7 @@ int tooclose(){
 void loop() {
 	int distance = ultrasonic1.distanceRead(); // Var "Distance" = Distance Renvoyée par CapUS
   int pression = analogRead(A2); // Var "Pression" = Force Renvoyée par CapPR
-  long int poids = pression*19.55; // Var "Poids" = Conversion Tension vers Masse -- Pression * 19.55 (Pression * 20000 / 1023)
+  long int poids = pression*19.55; // Var "Poids" = Conversion Tension vers Masse (MAX = 2kg) -- Pression * 19.55 (Pression * 20000 / 1023)
   timer.tick();
 
   /***************************
