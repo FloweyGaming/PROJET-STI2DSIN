@@ -20,8 +20,9 @@ Ultrasonic ultrasonic1(12, 13); //CapUS = PIN 12 (TRIG) & 13 (ECHO)
 #define led 5 //LED = PIN 5
 #define buzzer 6 //BUZZER = PIN 6
 #define fin 7 //CAPTEUR FIN DE COURSE = PIN 7
-#define motorA 2 //MOTEUR = PIN 2
-#define motorB 3 //MOTEUR = PIN 3
+#define button 4 //BOUTON = PIN 4
+#define motorA1 2 //MOTEUR = PIN 2
+#define motorA2 3 //MOTEUR = PIN 3
 int press = A2; //CAPTEUR PRESSION = PIN A2
 
 /**********************
@@ -33,9 +34,10 @@ void setup() {
   pinMode(press, INPUT); //CAPTEUR PRESSION = ENTRÉE
   pinMode(led, OUTPUT); //LED = SORTIE
   pinMode(buzzer, OUTPUT); //BUZZER = SORTIE
+  pinMode(button, INPUT); //BOUTON = ENTRÉE
   digitalWrite(buzzer, LOW); //BUZZER ÉTEINT
-  digitalWrite(motorA, LOW); //MOTEUR ARRÊTÉ
-  digitalWrite(motorB, LOW); //IDEM ↑
+  digitalWrite(motorA1, LOW); //MOTEUR ARRÊTÉ
+  digitalWrite(motorA2, LOW); //IDEM ↑
   pinMode(fin, INPUT); //CAPTEUR FIN DE COURSE = ENTRÉE
   Serial.begin(9600);
 }
@@ -47,8 +49,8 @@ int tooclose(){
   int distance = ultrasonic1.distanceRead(); // Var "Distance" = Distance Renvoyée par CapUS
   if (distance < 20 || distance > 300) { // Si l'objet est toujours à moins de 20 cm, on allume le Buzzer et on arrête le Moteur
     while (distance < 20 || distance > 300){ // Tant que l'objet est toujours à moins de 20 cm, laisser le moteur arrêté et avertir l'utilisateur
-      digitalWrite(motorA, LOW);
-      digitalWrite(motorB, LOW);
+      digitalWrite(motorA1, LOW);
+      digitalWrite(motorA2, LOW);
       Serial.println("WARNING");
       distance = ultrasonic1.distanceRead();
       Serial.print(distance);
@@ -57,7 +59,7 @@ int tooclose(){
       distance = ultrasonic1.distanceRead();
       while (distance <= 20 || distance >= 300){
         Serial.print(distance);
-        digitalWrite(motorB, HIGH);
+        digitalWrite(motorA2, HIGH);
         Serial.println("WARNING");
         digitalWrite(buzzer, HIGH); 
         delay(500);
@@ -69,10 +71,11 @@ int tooclose(){
       Serial.println("pont en h");
       pression = analogRead(A2);
     }
-    if (findecourse || pression > 10000){ // faire un if au cas où fin de course ou pression trop forte pour que le verrin remonte
-      digitalWrite(motorA, HIGH);
-      digitalWrite(motorB, HIGH);
-    } 
+    if (digitalRead(fin) == HIGH || pression > 10000){ // faire un if au cas où fin de course ou pression trop forte pour que le verrin remonte
+      digitalWrite(motorA1, HIGH);
+      digitalWrite(motorA2, HIGH);
+    }
+  }
 }
 
 /************************
@@ -99,27 +102,29 @@ void loop() {
   /****************************
   ----DÉTÉCTION DE DISTANCE----
   ****************************/
-  if (distance < 20 || distance > 300) {
-    timer.in(2500, tooclose); // Si un objet est à moins de 20 cm, lancer un chrono de 2.5 secondes, puis lancer la fonction "tooclose" (LIGNE 42)
-  } 
-  else {
-    digitalWrite(buzzer, LOW); //Sinon, éteindre (ou laisser éteint) le Buzzer
-    analogWrite(A0, 150);
-  }
+  if (digitalRead(button) == HIGH) {
+    if (distance < 20 || distance > 300) {
+      timer.in(2500, tooclose); // Si un objet est à moins de 20 cm, lancer un chrono de 2.5 secondes, puis lancer la fonction "tooclose" (LIGNE 42)
+    } 
+    else {
+      digitalWrite(buzzer, LOW); //Sinon, éteindre (ou laisser éteint) le Buzzer
+      analogWrite(A0, 150);
+    }
 
-  /*
-  if (digitalRead(fin) == HIGH) {
-    Serial.println("FDC"); //Renvoie "FDC"
-  } 
-  */
+    /*
+    if (digitalRead(fin) == HIGH) {
+      Serial.println("FDC"); //Renvoie "FDC"
+    } 
+    */
 
-  /*****************************
-  ----DÉTÉCTION DE PRESSSION----
-  *****************************/
-  if (pression > 511) {
-    digitalWrite(led, HIGH); // Si pression appliquée est supérieure à 511g, on allume la LED
-  } else {
-    digitalWrite(led, LOW); //Sinon, éteindre (ou laisser éteinte) la LED
+    /*****************************
+    ----DÉTÉCTION DE PRESSSION----
+    *****************************/
+    if (pression > 511) {
+      digitalWrite(led, HIGH); // Si pression appliquée est supérieure à 511g, on allume la LED
+    } else {
+      digitalWrite(led, LOW); //Sinon, éteindre (ou laisser éteinte) la LED
+    }
   }
 
   delay(200);
