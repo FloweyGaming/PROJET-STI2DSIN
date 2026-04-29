@@ -71,8 +71,11 @@ int tooclose(){
       Serial.println("pont en h");
       pression = analogRead(A2);
     }
+    /********************
+    ----FIN DE COURSE----
+    ********************/
     if (digitalRead(fin) == HIGH || pression > 10000){ // faire un if au cas où fin de course ou pression trop forte pour que le verrin remonte
-      digitalWrite(motorA1, HIGH);
+      digitalWrite(motorA1, LOW);
       digitalWrite(motorA2, HIGH);
     }
   }
@@ -99,23 +102,23 @@ void loop() {
   Serial.print(poids);
   Serial.println(" g"); //Renvoie "<poids> g"
 
-  /****************************
-  ----DÉTÉCTION DE DISTANCE----
-  ****************************/
-  if (digitalRead(button) == HIGH) {
+  /******************************
+  ----DÉMARRAGE DU COMPACTAGE----
+  ******************************/
+  if (digitalRead(button) == HIGH) { //Une fois le bouton START appuyé, lancer le compactage des déchets.
+    digitalWrite(motorA1, HIGH);
+    digitalWrite(motorA2, LOW); //Faire tourner le moteur du vérin
+
+    /****************************
+    ----DÉTÉCTION DE DISTANCE----
+    ****************************/
     if (distance < 20 || distance > 300) {
-      timer.in(2500, tooclose); // Si un objet est à moins de 20 cm, lancer un chrono de 2.5 secondes, puis lancer la fonction "tooclose" (LIGNE 42)
+      timer.in(2500, tooclose); // Si un objet est à moins de 20 cm dans la fente, lancer un chrono de 2.5 secondes, puis lancer la fonction "tooclose" (LIGNE 45)
     } 
     else {
       digitalWrite(buzzer, LOW); //Sinon, éteindre (ou laisser éteint) le Buzzer
       analogWrite(A0, 150);
     }
-
-    /*
-    if (digitalRead(fin) == HIGH) {
-      Serial.println("FDC"); //Renvoie "FDC"
-    } 
-    */
 
     /*****************************
     ----DÉTÉCTION DE PRESSSION----
@@ -124,6 +127,14 @@ void loop() {
       digitalWrite(led, HIGH); // Si pression appliquée est supérieure à 511g, on allume la LED
     } else {
       digitalWrite(led, LOW); //Sinon, éteindre (ou laisser éteinte) la LED
+    }
+
+    /********************
+    ----FIN DE COURSE----
+    ********************/
+    if (digitalRead(fin) == HIGH || pression > 10000){ // faire un if au cas où fin de course ou pression trop forte pour que le verrin remonte
+      digitalWrite(motorA1, LOW);
+      digitalWrite(motorA2, HIGH);
     }
   }
 
