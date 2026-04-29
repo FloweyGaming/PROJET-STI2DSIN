@@ -21,16 +21,16 @@ Ultrasonic ultrasonic1(12, 13); //CapUS = PIN 12 (TRIG) & 13 (ECHO)
 #define buzzer 6 //BUZZER = PIN 6
 #define fin 7 //CAPTEUR FIN DE COURSE = PIN 7
 #define button 4 //BOUTON = PIN 4
-#define motorA1 2 //MOTEUR = PIN 2
-#define motorA2 3 //MOTEUR = PIN 3
+#define motorA1 2 //MOTEUR-A1 = PIN 2
+#define motorA2 3 //MOTEUR-A2 = PIN 3
 int press = A2; //CAPTEUR PRESSION = PIN A2
 
 /**********************
 ----BOUCLE INITIALE----
 **********************/
 void setup() {
-  pinMode(motorA1, OUTPUT); //MOTEURA1 = SENS 1
-  pinMode(motorA2, OUTPUT); //MOTEURA = SENS 2
+  pinMode(motorA1, OUTPUT); //MOTEUR-A1 = SENS 1
+  pinMode(motorA2, OUTPUT); //MOTEUR-A2 = SENS 2
   pinMode(press, INPUT); //CAPTEUR PRESSION = ENTRÉE
   pinMode(led, OUTPUT); //LED = SORTIE
   pinMode(buzzer, OUTPUT); //BUZZER = SORTIE
