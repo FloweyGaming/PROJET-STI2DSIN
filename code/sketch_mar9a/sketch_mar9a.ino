@@ -40,6 +40,7 @@ void setup() {
   digitalWrite(motorA2, LOW); //IDEM ↑
   pinMode(fin, INPUT); //CAPTEUR FIN DE COURSE = ENTRÉE
   Serial.begin(9600);
+  
 }
 
 /******************************
@@ -47,20 +48,22 @@ void setup() {
 ******************************/
 int tooclose(){
   int distance = ultrasonic1.distanceRead(); // Var "Distance" = Distance Renvoyée par CapUS
-  if (distance < 20 || distance > 300) { // Si l'objet est toujours à moins de 20 cm, on allume le Buzzer et on arrête le Moteur
-    while (distance < 20 || distance > 300){ // Tant que l'objet est toujours à moins de 20 cm, laisser le moteur arrêté et avertir l'utilisateur
+  if (distance < 20 || distance > 357) { // Si l'objet est toujours à moins de 20 cm, on allume le Buzzer et on arrête le Moteur
+    while (distance < 20 || distance > 357){ // Tant que l'objet est toujours à moins de 20 cm, laisser le moteur arrêté et avertir l'utilisateur
       digitalWrite(motorA1, LOW);
       digitalWrite(motorA2, LOW);
-      Serial.println("WARNING");
+      Serial.println("### WARNING ###");
+      Serial.println("# MOTEUR ARRÊT");
       distance = ultrasonic1.distanceRead();
       Serial.print(distance);
     }
     while (pression < 150) { // rajouter le fin de course
       distance = ultrasonic1.distanceRead();
-      while (distance <= 20 || distance >= 300){
+      while (distance <= 20 || distance >= 357){
         Serial.print(distance);
         digitalWrite(motorA2, HIGH);
-        Serial.println("WARNING");
+        Serial.println("### WARNING ###");
+        Serial.println("# MOTEUR RETOUR");
         digitalWrite(buzzer, HIGH); 
         delay(500);
         digitalWrite(buzzer, LOW);
@@ -106,13 +109,14 @@ void loop() {
   ----DÉMARRAGE DU COMPACTAGE----
   ******************************/
   if (digitalRead(button) == HIGH) { //Une fois le bouton START appuyé, lancer le compactage des déchets.
+    Serial.println("--------START--------");
     digitalWrite(motorA1, HIGH);
     digitalWrite(motorA2, LOW); //Faire tourner le moteur du vérin
 
     /****************************
     ----DÉTÉCTION DE DISTANCE----
     ****************************/
-    if (distance < 20 || distance > 300) {
+    if (distance < 20 || distance > 357) {
       timer.in(2500, tooclose); // Si un objet est à moins de 20 cm dans la fente, lancer un chrono de 2.5 secondes, puis lancer la fonction "tooclose" (LIGNE 45)
     } 
     else {
