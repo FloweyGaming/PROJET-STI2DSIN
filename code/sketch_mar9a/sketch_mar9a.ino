@@ -71,7 +71,7 @@ int tooclose(){
         distance = ultrasonic1.distanceRead();
       }
 
-      Serial.println("pont en h");
+      Serial.println("# MOTEUR GO");
       pression = analogRead(A2);
     }
     /********************
